@@ -86,14 +86,14 @@ ExternalProject_Add(${extProjectName}
     -DCMAKE_OSX_SYSROOT=${OSX_SDK}
     -DCMAKE_CXX_STANDARD=11 
     -DCMAKE_CXX_STANDARD_REQUIRED=ON
-    -DVTK_GROUP_Qt=ON
+    -DVTK_GROUP_Qt:BOOL=ON
     -DVTK_QT_VERSION=5
-    -DQt5DIR=${Qt5Dir}
-    -DQt5Core_DIR=${Qt5CoreDir}
-    -DQt5Gui_DIR=${Qt5GuiDir}
-    -DQt5Sql_DIR=${Qt5SqlDir}
-    -DQt5UiPlugin_DIR=${Qt5UiPluginDir}
-    -DQt5Widgets_DIR=${Qt5WidgetsDir}
+    -DQt5DIR:PATH=${Qt5Dir}
+    -DQt5Core_DIR:PATH=${Qt5CoreDir}
+    -DQt5Gui_DIR:PATH=${Qt5GuiDir}
+    -DQt5Sql_DIR:PATH=${Qt5SqlDir}
+    -DQt5UiPlugin_DIR:PATH=${Qt5UiPluginDir}
+    -DQt5Widgets_DIR:PATH=${Qt5WidgetsDir}
     #-DVTK_INSTALL_QT_PLUGIN_DIR=${CMAKE_INSTALL_PREFIX}/${VTK_INSTALL_QT_DIR}
 		
   
