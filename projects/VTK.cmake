@@ -86,7 +86,7 @@ ExternalProject_Add(${extProjectName}
     -DCMAKE_OSX_SYSROOT=${OSX_SDK}
     -DCMAKE_CXX_STANDARD=11 
     -DCMAKE_CXX_STANDARD_REQUIRED=ON
-    -DVTK_GROUP_Qt:BOOL=ON
+    -DVTK_Group_Qt:BOOL=ON
     -DVTK_QT_VERSION=5
     -DQt5DIR:PATH=${Qt5Dir}
     -DQt5Core_DIR:PATH=${Qt5CoreDir}
