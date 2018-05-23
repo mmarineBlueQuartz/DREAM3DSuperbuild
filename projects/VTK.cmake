@@ -76,7 +76,6 @@ ExternalProject_Add(${extProjectName}
   #BINARY_DIR "${DREAM3D_SDK}/superbuild/${extProjectName}/Build/${CMAKE_BUILD_TYPE}"
   BINARY_DIR "${BINARY_DIR}"
   INSTALL_DIR "${DREAM3D_SDK}/superbuild/${extProjectName}/Install"
-  INSTALL_COMMAND ""
   
   CMAKE_ARGS
     -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
@@ -87,7 +86,6 @@ ExternalProject_Add(${extProjectName}
     -DCMAKE_OSX_SYSROOT=${OSX_SDK}
     -DCMAKE_CXX_STANDARD=11 
     -DCMAKE_CXX_STANDARD_REQUIRED=ON
-
     -DVTK_GROUP_Qt=ON
     -DVTK_QT_VERSION=5
     -DQt5DIR=${Qt5Dir}
@@ -96,10 +94,10 @@ ExternalProject_Add(${extProjectName}
     -DQt5Sql_DIR=${Qt5SqlDir}
     -DQt5UiPlugin_DIR=${Qt5UiPluginDir}
     -DQt5Widgets_DIR=${Qt5WidgetsDir}
-    -DVTK_INSTALL_QT_PLUGIN_DIR=${CMAKE_INSTALL_PREFIX}/${VTK_INSTALL_QT_DIR}
+    #-DVTK_INSTALL_QT_PLUGIN_DIR=${CMAKE_INSTALL_PREFIX}/${VTK_INSTALL_QT_DIR}
 		
   
-  #DEPENDS Qt5
+  DEPENDS Qt5
   LOG_DOWNLOAD 1
   LOG_UPDATE 1
   LOG_CONFIGURE 1
