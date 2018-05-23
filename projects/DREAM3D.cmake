@@ -99,6 +99,17 @@ if(CLONE_REPOS)
             BINARY_DIR   ${DREAM3D_SDK}/superbuild/${projectName}/Binary
             INSTALL_DIR  ${DREAM3D_SDK}/superbuild/${projectName}/Install)
 
+  set(projectName SIMPLVtkLib)
+  CloneRepo(PROJECT_NAME ${projectName}
+            DEPENDS DREAM3D
+            GIT_REPOSITORY http://www.github.com/bluequartzsoftware/${projectName}
+            TMP_DIR      ${DREAM3D_SDK}/superbuild/${projectName}/tmp
+            STAMP_DIR    ${DREAM3D_SDK}/superbuild/${projectName}/stamp
+            DOWNLOAD_DIR ${DREAM3D_SDK}/superbuild/${projectName}/download
+            SOURCE_DIR   ${WORKSPACE_DIR}/DREAM3D/ExternalProjects/${projectName}
+            BINARY_DIR   ${DREAM3D_SDK}/superbuild/${projectName}/Binary
+            INSTALL_DIR  ${DREAM3D_SDK}/superbuild/${projectName}/Install)
+
   set(projectName SIMPLView)
   CloneRepo(PROJECT_NAME ${projectName}
             DEPENDS DREAM3D
@@ -154,7 +165,7 @@ else()
 endif()
 
 set(DREAM3D_REPO_DEPENDENCIES "")
-foreach(plugin ${d3dPlugins} DREAM3D CMP SIMPL SIMPLView ITKImageProcessing )
+foreach(plugin ${d3dPlugins} DREAM3D CMP SIMPL SIMPLVtkLib SIMPLView ITKImageProcessing )
   list(APPEND DREAM3D_REPO_DEPENDENCIES ${plugin})
 endforeach()
 
