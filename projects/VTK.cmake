@@ -35,7 +35,8 @@ if(WIN32)
   set(Qt5WidgetsDir "${DREAM3D_SDK}/Qt${qt_version_full}/${qt_version_full}/msvc2017_64/lib/cmake/Qt5Widgets")
 elseif(APPLE)
   set(BINARY_DIR "${DREAM3D_SDK}/${extProjectName}-${VTK_VERSION}-${CMAKE_BUILD_TYPE}")
-  set(VTK_INSTALL_DIR "${DREAM3D_SDK}/${extProjectName}-${VTK_VERSION}-${CMAKE_BUILD_TYPE}")
+  set(VTK_INSTALL_DIR_NO_BUILD_TYPE "${DREAM3D_SDK}/${extProjectName}-${VTK_VERSION}-")
+  set(VTK_INSTALL_DIR "${VTK_INSTALL_DIR_NO_BUILD_TYPE}${CMAKE_BUILD_TYPE}")
   set(CXX_FLAGS "-stdlib=libc++ -std=c++11")
   set(Qt5Dir "${DREAM3D_SDK}/Qt${qt_version_full}/${qt_version_full}/clang_64/lib/cmake/Qt5")
   set(Qt5CoreDir "${DREAM3D_SDK}/Qt${qt_version_full}/${qt_version_full}/clang_64/lib/cmake/Qt5Core")
@@ -45,7 +46,8 @@ elseif(APPLE)
   set(Qt5WidgetsDir "${DREAM3D_SDK}/Qt${qt_version_full}/${qt_version_full}/clang_64/lib/cmake/Qt5Widgets")
 elseif("${BUILD_VTK}" STREQUAL "ON")
   set(BINARY_DIR "${DREAM3D_SDK}/${extProjectName}-${VTK_VERSION}-${CMAKE_BUILD_TYPE}")
-  set(VTK_INSTALL_DIR "${DREAM3D_SDK}/${extProjectName}-${VTK_VERSION}-${CMAKE_BUILD_TYPE}")
+  set(VTK_INSTALL_DIR_NO_BUILD_TYPE "${DREAM3D_SDK}/${extProjectName}-${VTK_VERSION}-")
+  set(VTK_INSTALL_DIR "${VTK_INSTALL_DIR_NO_BUILD_TYPE}${CMAKE_BUILD_TYPE}")
   set(CXX_FLAGS "-std=c++11")
 else()
   if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -86,17 +88,18 @@ ExternalProject_Add(${extProjectName}
     -DCMAKE_CXX_STANDARD=11 
     -DCMAKE_CXX_STANDARD_REQUIRED=ON
 
-    	-DVTK_GROUP_Qt=ON
-    	-DVTK_QT_VERSION=5
-    	-DQt5DIR=${Qt5Dir}
-    	-DQt5Core_DIR=${Qt5CoreDir}
-    	-DQt5Gui_DIR=${Qt5GuiDir}
-    	-DQt5Sql_DIR=${Qt5SqlDir}
-    	-DQt5UiPlugin_DIR=${Qt5UiPluginDir}
-    	-DQt5Widgets_DIR=${Qt5WidgetsDir}
+    -DVTK_GROUP_Qt=ON
+    -DVTK_QT_VERSION=5
+    -DQt5DIR=${Qt5Dir}
+    -DQt5Core_DIR=${Qt5CoreDir}
+    -DQt5Gui_DIR=${Qt5GuiDir}
+    -DQt5Sql_DIR=${Qt5SqlDir}
+    -DQt5UiPlugin_DIR=${Qt5UiPluginDir}
+    -DQt5Widgets_DIR=${Qt5WidgetsDir}
+    -DVTK_INSTALL_QT_PLUGIN_DIR=${CMAKE_INSTALL_PREFIX}/${VTK_INSTALL_QT_DIR}
 		
   
-  DEPENDS Qt5
+  #DEPENDS Qt5
   LOG_DOWNLOAD 1
   LOG_UPDATE 1
   LOG_CONFIGURE 1
@@ -104,3 +107,21 @@ ExternalProject_Add(${extProjectName}
   LOG_TEST 1
   LOG_INSTALL 1
 )
+
+file(APPEND ${DREAM3D_SDK_FILE} "
+#--------------------------------------------------------------------------------------------------
+# Set VTK_DIR")
+
+if(WIN32)
+  file(APPEND ${DREAM3D_SDK_FILE} "
+set(VTK_DIR ${VTK_INSTALL_DIR} CACHE PATH \"\")
+")
+else()
+  file(APPEND ${DREAM3D_SDK_FILE} "
+if( CMAKE_BUILD_TYPE MATCHES Debug ) 
+  set(VTK_DIR ${VTK_INSTALL_DIR_NO_BUILD_TYPE}Debug CACHE PATH \"\")
+else()
+  set(VTK_DIR ${VTK_INSTALL_DIR_NO_BUILD_TYPE}Release CACHE PATH \"\")
+endif()
+")
+endif()
