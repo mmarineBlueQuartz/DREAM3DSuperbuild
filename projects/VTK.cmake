@@ -88,13 +88,7 @@ ExternalProject_Add(${extProjectName}
     -DCMAKE_CXX_STANDARD_REQUIRED=ON
     -DVTK_Group_Qt:BOOL=ON
     -DVTK_QT_VERSION=5
-    -DQt5DIR:PATH=${Qt5Dir}
-    -DQt5Core_DIR:PATH=${Qt5CoreDir}
-    -DQt5Gui_DIR:PATH=${Qt5GuiDir}
-    -DQt5Sql_DIR:PATH=${Qt5SqlDir}
-    -DQt5UiPlugin_DIR:PATH=${Qt5UiPluginDir}
-    -DQt5Widgets_DIR:PATH=${Qt5WidgetsDir}
-    #-DVTK_INSTALL_QT_PLUGIN_DIR=${CMAKE_INSTALL_PREFIX}/${VTK_INSTALL_QT_DIR}
+    -DQt5_DIR:PATH=${Qt5Dir}
 		
   
   DEPENDS Qt5
